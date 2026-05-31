@@ -192,8 +192,8 @@ function Logo({ compact = false, floating = false }: { compact?: boolean; floati
     <Image
       src={isNavLogo ? "/images/navigation-logo.png" : "/images/logo.png"}
       alt="KPL Plastering Services"
-      width={520}
-      height={220}
+      width={isNavLogo ? 1219 : 520}
+      height={isNavLogo ? 1038 : 220}
       className={`object-contain ${
         floating
           ? "h-[108px] w-auto max-w-[270px]"
@@ -369,7 +369,7 @@ export default function Home() {
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/38 via-black/58 to-black/86 md:bg-gradient-to-r md:from-black/90 md:via-black/42 md:to-transparent" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/12 via-black/24 to-black/62 md:bg-gradient-to-r md:from-black/90 md:via-black/42 md:to-transparent" />
         <div className="absolute right-[-120px] top-[18%] z-10 hidden h-[520px] w-[520px] rounded-full bg-[#f28d1d]/25 blur-3xl md:block" />
         <div className="absolute bottom-[-140px] left-[30%] z-10 hidden h-[420px] w-[420px] rounded-full bg-[#ffb347]/15 blur-3xl md:block" />
 
