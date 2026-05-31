@@ -241,6 +241,23 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(".scroll-fade"));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.12, rootMargin: "-5% 0px -10% 0px" }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setReviewStart((current) => (current + 1) % reviews.length);
     }, 5200);
@@ -271,6 +288,27 @@ export default function Home() {
         .review-slide-in {
           animation: review-slide-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
+
+        .scroll-fade {
+          opacity: 0;
+          transform: translateY(34px);
+          filter: blur(2px);
+          transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.75s ease;
+          will-change: opacity, transform, filter;
+        }
+        .scroll-fade.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .scroll-fade {
+            opacity: 1;
+            transform: none;
+            filter: none;
+            transition: none;
+          }
+        }
       `}</style>
 
       {introVisible && (
@@ -297,7 +335,7 @@ export default function Home() {
                 ))}
               </nav>
 
-              <a href={quoteWhatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-gradient-to-br from-[#ffb347] via-[#f28d1d] to-[#d96705] px-6 text-[0.8rem] font-black uppercase tracking-[0.16em] text-black transition hover:brightness-110">
+              <a href={whatsappBaseHref} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-gradient-to-br from-[#ffb347] via-[#f28d1d] to-[#d96705] px-6 text-[0.8rem] font-black uppercase tracking-[0.16em] text-black transition hover:brightness-110">
                 Get Quote
               </a>
             </div>
@@ -347,7 +385,7 @@ export default function Home() {
                     {item}
                   </a>
                 ))}
-                <a href={quoteWhatsappHref} target="_blank" rel="noopener noreferrer" className="rounded-full bg-gradient-to-r from-[#ffb347] to-[#f28d1d] px-5 py-3 text-sm text-black">
+                <a href={whatsappBaseHref} target="_blank" rel="noopener noreferrer" className="rounded-full bg-gradient-to-r from-[#ffb347] to-[#f28d1d] px-5 py-3 text-sm text-black">
                   WhatsApp Quote
                 </a>
               </div>
@@ -403,7 +441,7 @@ export default function Home() {
               </div>
 
               <div className="mt-7 grid w-full max-w-[350px] grid-cols-1 gap-3 sm:max-w-[580px] sm:grid-cols-2">
-                <a href={quoteWhatsappHref} target="_blank" rel="noopener noreferrer" className="rounded-full bg-gradient-to-r from-[#ffb347] via-[#f28d1d] to-[#e57308] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-black shadow-[0_0_35px_rgba(242,141,29,0.35)] transition hover:brightness-110">
+                <a href={whatsappBaseHref} target="_blank" rel="noopener noreferrer" className="rounded-full bg-gradient-to-r from-[#ffb347] via-[#f28d1d] to-[#e57308] px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-black shadow-[0_0_35px_rgba(242,141,29,0.35)] transition hover:brightness-110">
                   WhatsApp Quote
                 </a>
                 <a href={phoneHref} className="rounded-full border border-white/50 bg-white/10 px-6 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white backdrop-blur transition hover:bg-white hover:text-black">
@@ -415,7 +453,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative bg-black px-4 py-8 text-white md:px-5">
+      <section className="scroll-fade relative bg-black px-4 py-8 text-white md:px-5">
         <div className="mx-auto grid max-w-7xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
             ["100%", "Recommended"],
@@ -431,7 +469,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="media-walls" className="bg-[#0b0908] px-4 py-16 text-white md:px-5 md:py-24">
+      <section id="media-walls" className="scroll-fade bg-[#0b0908] px-4 py-16 text-white md:px-5 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 grid gap-5 md:grid-cols-[0.85fr_1fr] md:items-end">
             <div>
@@ -465,7 +503,7 @@ export default function Home() {
                 <p className="mt-5 max-w-xl text-base font-semibold leading-7 text-white/72">
                   {services[0].copy}
                 </p>
-                <a href={quoteWhatsappHref} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex rounded-full bg-white px-6 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#f28d1d]">
+                <a href={whatsappBaseHref} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex rounded-full bg-white px-6 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-black transition hover:bg-[#f28d1d]">
                   Start A Design Quote
                 </a>
               </div>
@@ -487,7 +525,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="showcase" className="relative overflow-hidden bg-[#f6f0e8] px-4 py-16 text-black md:px-5 md:py-24">
+      <section id="showcase" className="scroll-fade relative overflow-hidden bg-[#f6f0e8] px-4 py-16 text-black md:px-5 md:py-24">
         <div className="absolute right-[-160px] top-20 h-[420px] w-[420px] rounded-full bg-[#f28d1d]/24 blur-3xl" />
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 grid gap-5 md:grid-cols-[0.9fr_1fr] md:items-end">
@@ -542,14 +580,14 @@ A selection of our completed media wall projects, showing the variety of designs
             <p className="max-w-2xl text-sm font-semibold leading-7 text-white/68">
               Every design starts with the room: TV size, fireplace, lighting, storage, wall width and the style you want to create.
             </p>
-            <a href={quoteWhatsappHref} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex rounded-full bg-gradient-to-r from-[#ffb347] to-[#f28d1d] px-6 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-black md:mt-0">
+            <a href={whatsappBaseHref} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex rounded-full bg-gradient-to-r from-[#ffb347] to-[#f28d1d] px-6 py-3.5 text-sm font-black uppercase tracking-[0.12em] text-black md:mt-0">
               Plan My Media Wall
             </a>
           </div>
         </div>
       </section>
 
-      <section id="reviews" className="bg-black px-4 py-16 text-white md:px-5 md:py-24">
+      <section id="reviews" className="scroll-fade bg-black px-4 py-16 text-white md:px-5 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 grid gap-5 md:grid-cols-[0.85fr_1fr] md:items-end">
             <div>
@@ -598,7 +636,7 @@ A selection of our completed media wall projects, showing the variety of designs
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#0b0908] px-4 py-16 text-white md:px-5 md:py-24">
+      <section className="scroll-fade relative overflow-hidden bg-[#0b0908] px-4 py-16 text-white md:px-5 md:py-24">
         <div className="absolute left-[-160px] top-16 h-[400px] w-[400px] rounded-full bg-[#f28d1d]/18 blur-3xl" />
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.86fr_1fr] lg:items-center">
           <div>
@@ -628,7 +666,7 @@ A selection of our completed media wall projects, showing the variety of designs
         </div>
       </section>
 
-      <section id="quote" className="bg-[#f6f0e8] px-4 py-16 text-black md:px-5 md:py-24">
+      <section id="quote" className="scroll-fade bg-[#f6f0e8] px-4 py-16 text-black md:px-5 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_1fr]">
           <div className="rounded-[2rem] bg-black p-8 text-white shadow-[0_24px_90px_rgba(0,0,0,0.22)] md:p-10">
             <p className="font-black uppercase tracking-[0.25em] text-[#f28d1d]">Areas Covered</p>
@@ -682,11 +720,11 @@ A selection of our completed media wall projects, showing the variety of designs
         </div>
       </section>
 
-      <a href={quoteWhatsappHref} target="_blank" rel="noopener noreferrer" className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-2xl ring-4 ring-white/25 transition hover:scale-105" aria-label="Message KPL Plastering Services on WhatsApp">
+      <a href={whatsappBaseHref} target="_blank" rel="noopener noreferrer" className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-2xl ring-4 ring-white/25 transition hover:scale-105" aria-label="Message KPL Plastering Services on WhatsApp">
         <WhatsAppIcon className="h-8 w-8" />
       </a>
 
-      <footer className="bg-black px-4 py-12 text-white md:px-5">
+      <footer className="scroll-fade bg-black px-4 py-12 text-white md:px-5">
         <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.2fr_1fr_1fr] md:items-start">
           <div>
             <Logo />
@@ -713,7 +751,7 @@ A selection of our completed media wall projects, showing the variety of designs
               <p className="font-bold text-white">KPL Plastering Services</p>
               <p>Rotherham, South Yorkshire</p>
               <a href={phoneHref} className="block hover:text-[#f28d1d]">{phoneDisplay}</a>
-              <a href={quoteWhatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[#f28d1d]"><WhatsAppIcon className="h-5 w-5 text-[#f28d1d]" />WhatsApp for a quote</a>
+              <a href={whatsappBaseHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[#f28d1d]"><WhatsAppIcon className="h-5 w-5 text-[#f28d1d]" />WhatsApp for a quote</a>
               <a href={facebookHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[#f28d1d]"><FacebookIcon className="h-5 w-5 text-[#f28d1d]" />Facebook</a>
               <a href={emailHref} className="block break-all hover:text-[#f28d1d]">{emailHref.replace("mailto:", "")}</a>
             </div>
