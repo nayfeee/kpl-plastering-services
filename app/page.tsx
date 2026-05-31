@@ -196,7 +196,7 @@ function Logo({ compact = false, floating = false }: { compact?: boolean; floati
       height={220}
       className={`object-contain ${
         floating
-          ? "h-[108px] w-auto max-w-[270px] opacity-90"
+          ? "h-[108px] w-auto max-w-[270px]"
           : compact
             ? "h-auto w-[104px]"
             : "h-auto w-[170px] lg:w-[205px]"
@@ -285,7 +285,7 @@ export default function Home() {
         <div className={`hidden transition-all duration-500 md:block ${scrolled ? "mt-0 w-full max-w-none px-0" : "mx-auto mt-5 max-w-7xl px-6"}`}>
           {!scrolled ? (
             <div className="pointer-events-auto grid h-[118px] grid-cols-[320px_1fr_220px] overflow-hidden rounded-[1.8rem] border border-white/10 bg-black/82 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl">
-              <a href="#home" className="flex items-center justify-center border-r border-white/10 px-5">
+              <a href="#home" className="flex items-center justify-center border-r border-white/10 bg-black px-5">
                 <Logo floating />
               </a>
 
