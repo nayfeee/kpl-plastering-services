@@ -249,7 +249,7 @@ export default function Home() {
           entry.target.classList.toggle("is-visible", entry.isIntersecting);
         });
       },
-      { threshold: 0.12, rootMargin: "-5% 0px -10% 0px" }
+      { threshold: 0.08, rootMargin: "0px 0px -8% 0px" }
     );
 
     elements.forEach((element) => observer.observe(element));
@@ -273,8 +273,7 @@ export default function Home() {
   const mobileReview = reviews[reviewStart % reviews.length];
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#080706] text-white">
-      <style jsx global>{`
+<main className="min-h-screen overflow-x-clip bg-[#080706] text-white">      <style jsx global>{`
         @keyframes review-slide-in {
           0% {
             opacity: 0;
@@ -289,26 +288,6 @@ export default function Home() {
           animation: review-slide-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
-        .scroll-fade {
-          opacity: 0;
-          transform: translateY(34px);
-          filter: blur(2px);
-          transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.75s ease;
-          will-change: opacity, transform, filter;
-        }
-        .scroll-fade.is-visible {
-          opacity: 1;
-          transform: translateY(0);
-          filter: blur(0);
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .scroll-fade {
-            opacity: 1;
-            transform: none;
-            filter: none;
-            transition: none;
-          }
-        }
       `}</style>
 
       {introVisible && (

@@ -12,13 +12,19 @@
 }
 
 html {
+  width: 100%;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
   background: var(--brand-dark);
   color: #ffffff;
+  touch-action: pan-y;
 }
 
 .field {
@@ -45,6 +51,42 @@ body {
 .field option {
   background: #111111;
   color: white;
+}
+
+.scroll-fade {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 650ms ease,
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.scroll-fade.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (max-width: 767px) {
+  .scroll-fade {
+    transform: translate3d(0, 10px, 0);
+    transition:
+      opacity 520ms ease,
+      transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .scroll-fade {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 @keyframes fade-up {
@@ -83,4 +125,9 @@ body {
 
 .mobile-call-wobble {
   animation: mobile-call-wobble 5s ease-in-out infinite;
+}
+
+html,
+body {
+  overflow-x: clip;
 }
