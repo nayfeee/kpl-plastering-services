@@ -249,7 +249,7 @@ export default function Home() {
           entry.target.classList.toggle("is-visible", entry.isIntersecting);
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -12% 0px" }
+      { threshold: 0.12, rootMargin: "-5% 0px -10% 0px" }
     );
 
     elements.forEach((element) => observer.observe(element));
@@ -291,19 +291,21 @@ export default function Home() {
 
         .scroll-fade {
           opacity: 0;
-          transform: translate3d(0, 18px, 0);
-          transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-          will-change: opacity, transform;
-          backface-visibility: hidden;
+          transform: translateY(34px);
+          filter: blur(2px);
+          transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), filter 0.75s ease;
+          will-change: opacity, transform, filter;
         }
         .scroll-fade.is-visible {
           opacity: 1;
-          transform: translate3d(0, 0, 0);
+          transform: translateY(0);
+          filter: blur(0);
         }
         @media (prefers-reduced-motion: reduce) {
           .scroll-fade {
             opacity: 1;
             transform: none;
+            filter: none;
             transition: none;
           }
         }
